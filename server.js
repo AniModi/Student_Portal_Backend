@@ -26,8 +26,10 @@ const adminRoutes = require("./routes/adminRoutes");
 const authRoutes = require("./routes/authRoutes");
 const semesterRegistrationRoutes = require("./routes/semesterRegistrationRoutes");
 const verifyFeesRoutes = require("./routes/verifyFeesRoute.js");
+const fetchDocumentRoutes = require("./routes/fetchDocumentRoutes.js");
 
 app.use("/api/admin", adminRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/registration", semesterRegistrationRoutes);
 app.use("/api/verify-fees", verifyFeesRoutes);
+app.use("/api/fetch-documents", fetchDocumentRoutes)

@@ -99,8 +99,24 @@ async function changePassword(req, res) {
   }
 }
 
+async function changeWalletAddress(req, res) {
+  try {
+    const { username, walletAddress } = req.body;
+    const student = await User.findOneAndUpdate(
+      {username},
+      {walletAddress : walletAddress}
+    );
+    res.status(200).json({message : "Wallet address changed successfully"});
+  }
+  catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error });
+  }
+}
+
 module.exports = {
   loginUser,
   checkJwt,
   changePassword,
+  changeWalletAddress,
 };

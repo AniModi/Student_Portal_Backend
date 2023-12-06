@@ -22,6 +22,10 @@ const UserSchema = new Schema({
     enum: ["student", "finance", "admin", "faculty"],
     default: "student",
   },
+  walletAddress : {
+    type: String,
+    required: true,
+  }
 });
 
 module.exports = User = mongoose.model("user", UserSchema);

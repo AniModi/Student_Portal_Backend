@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 // @access  Admin
 exports.createStudent = async (req, res) => {
   try {
-    const { name, username, password } = req.body;
+    const { name, username, password, walletAddress } = req.body;
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -16,7 +16,7 @@ exports.createStudent = async (req, res) => {
     if (student) {
       student = await User.findOneAndUpdate(
         { username },
-        { name, password: hashedPassword },
+        { name, password: hashedPassword, walletAddress : walletAddress },
         { new: true } 
       );
     } else {
@@ -24,6 +24,7 @@ exports.createStudent = async (req, res) => {
         name,
         username,
         password: hashedPassword,
+        walletAddress : walletAddress,
         role: "student",
       });
     }

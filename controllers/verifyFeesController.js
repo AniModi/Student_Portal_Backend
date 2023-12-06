@@ -49,7 +49,6 @@ async function uploadFeeReferences(req, res) {
       feeReferences = await FeeReferences.findOneAndUpdate(
         { username: username, semester: semester },
         updateFields,
-        { new: true }
       );
     } else {
       feeReferences = new FeeReferences({

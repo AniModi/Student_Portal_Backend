@@ -1,5 +1,3 @@
-const jwt = require("jsonwebtoken");
-
 const StudentDocument = require("../models/StudentDocument");
 const StudentVerifications = require("../models/StudentVerifications");
 

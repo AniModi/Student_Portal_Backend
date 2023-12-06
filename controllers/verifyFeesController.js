@@ -1,5 +1,6 @@
 const FeeReferences = require("../models/FeeReferences");
 const StudentVerifications = require("../models/StudentVerifications");
+const StudentDocument = require("../models/StudentDocument");
 
 async function uploadFeeReferences(req, res) {
   const {
@@ -65,7 +66,6 @@ async function uploadFeeReferences(req, res) {
   }
 }
 
-
 async function fetchAllReferences(req, res) {
   try {
     const feeReferences = await FeeReferences.find({});
@@ -77,7 +77,6 @@ async function fetchAllReferences(req, res) {
     res.status(500).json({ success: false, data: err });
   }
 }
-
 
 async function fetchReferences(req, res) {
   const { username, semester } = req.params;
@@ -96,10 +95,14 @@ async function fetchReferences(req, res) {
   }
 }
 
-
-
 async function verifyFees(req, res) {
-  const { username, semester, instituteFeeVerified, hostelFeeVerified, messFeeVerified } = req.body;
+  const {
+    username,
+    semester,
+    instituteFeeVerified,
+    hostelFeeVerified,
+    messFeeVerified,
+  } = req.body;
   const updateFields = {};
 
   if (instituteFeeVerified !== undefined && instituteFeeVerified !== null) {
@@ -141,11 +144,72 @@ async function verifyFees(req, res) {
   }
 }
 
+async function upload(req, res) {
+  console.log(req.body);
+  const {
+    username,
+    instituteFeeReceipt,
+    hostelFeeReceipt,
+    messFeeReceipt,
+    semester,
+  } = req.body;
 
+  const updateFields = {};
+
+  if (
+    instituteFeeReceipt !== undefined &&
+    instituteFeeReceipt !== null &&
+    instituteFeeReceipt !== ""
+  ) {
+    updateFields.instituteFeeReceipt = instituteFeeReceipt;
+  }
+
+  if (
+    hostelFeeReceipt !== undefined &&
+    hostelFeeReceipt !== null &&
+    hostelFeeReceipt !== ""
+  ) {
+    updateFields.hostelFeeReceipt = hostelFeeReceipt;
+  }
+
+  if (
+    messFeeReceipt !== undefined &&
+    messFeeReceipt !== null &&
+    messFeeReceipt !== ""
+  ) {
+    updateFields.messFeeReceipt = messFeeReceipt;
+  }
+
+  console.log(updateFields);
+  try {
+    let studentDocument = await StudentDocument.findOne({
+      username: username,
+      semester: semester,
+    });
+    if (studentDocument) {
+      studentDocument = await StudentDocument.findOneAndUpdate(
+        { username: username, semester: semester },
+        updateFields,
+        { new: true }
+      );
+    } else {
+      studentDocument = new StudentDocument({
+        username: username,
+        semester: semester,
+        ...updateFields,
+      });
+      await studentDocument.save();
+    }
+    res.status(200).json({ success: true, data: studentDocument });
+  } catch (err) {
+    res.status(500).json({ success: false, data: err });
+  }
+}
 
 module.exports = {
   uploadFeeReferences,
   fetchReferences,
   fetchAllReferences,
   verifyFees,
+  upload,
 };

@@ -23,6 +23,9 @@ const StudentVerificationsSchema = new Schema({
   resultPublished: {
     type: Boolean,
   },
+  registrationVerified: {
+    type: Boolean,
+  },
 });
 
 module.exports = StudentVerifications = mongoose.model(

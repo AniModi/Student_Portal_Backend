@@ -71,7 +71,36 @@ async function checkJwt(req, res) {
   });
 }
 
+async function changePassword(req, res) {
+  try {
+    const { username, oldPassword, newPassword } = req.body;
+    
+    let user = await User.findOne({ username });
+
+    const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Invalid username or password" });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    user = await User.findOneAndUpdate(
+      { username },
+      { password: hashedPassword }
+    );
+
+    res.status(200).json({ message: "Password changed successfully" });
+    
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error });
+  }
+}
+
 module.exports = {
   loginUser,
   checkJwt,
+  changePassword,
 };

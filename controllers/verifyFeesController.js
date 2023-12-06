@@ -206,10 +206,32 @@ async function upload(req, res) {
   }
 }
 
+async function fetchVerifiedFees(req, res) {
+  try {
+
+    const {username, semester} = req.params;
+
+    const studentVerifications = await StudentVerifications.findOne({
+      username: username,
+      semester: semester,
+    });
+
+    if (!studentVerifications) {
+      res.status(200).json({ success: true, data: null });
+    }
+
+    res.status(200).json({ success: true, data: studentVerifications });
+
+  } catch (err) {
+    res.status(500).json({ success: false, data: err });
+  }
+}
+
 module.exports = {
   uploadFeeReferences,
   fetchReferences,
   fetchAllReferences,
   verifyFees,
   upload,
+  fetchVerifiedFees,
 };

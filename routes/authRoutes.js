@@ -5,5 +5,6 @@ const router = Router();
 
 router.post('/login', authController.loginUser);
 router.get('/is-authenticated', authController.checkJwt);
+router.post('/change-password', authController.changePassword);
 
 module.exports = router;

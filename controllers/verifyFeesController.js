@@ -69,7 +69,7 @@ async function fetchAllReferences(req, res) {
   try {
     const feeReferences = await FeeReferences.find({});
     if (!FeeReferences) {
-      res.status(200).json({ success: true, data: null });
+      res.status(200).json({ success: true, data: {} });
     }
     res.status(200).json({ success: true, data: feeReferences });
   } catch (err) {
@@ -86,7 +86,7 @@ async function fetchReferences(req, res) {
       semester: semester,
     });
     if (!feeReferences) {
-      res.status(200).json({ success: true, data: null });
+      res.status(200).json({ success: true, data: {} });
     }
     res.status(200).json({ success: true, data: feeReferences });
   } catch (err) {
@@ -216,7 +216,7 @@ async function fetchVerifiedFees(req, res) {
     });
 
     if (!studentVerifications) {
-      res.status(200).json({ success: true, data: null });
+      res.status(200).json({ success: true, data: {} });
       return;
     }
 

@@ -46,7 +46,7 @@ async function getRegistrationDetails(req, res) {
       semester: semester,
     });
     if (!studentDocument) {
-      res.status(200).json({ success: true, data: null });
+      res.status(200).json({ success: true, data: {} });
       return;
     }
     res.status(200).json({ success: true, data: studentDocument });
@@ -94,7 +94,7 @@ async function isVerified(req, res) {
         semester: semester,
         });
         if (!verify) {
-        res.status(200).json({ success: true, data: null });
+        res.status(200).json({ success: true, data: {} });
         return;
         }
         res.status(200).json({ success: true, data: verify });

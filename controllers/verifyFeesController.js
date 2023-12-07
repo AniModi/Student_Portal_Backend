@@ -217,6 +217,7 @@ async function fetchVerifiedFees(req, res) {
 
     if (!studentVerifications) {
       res.status(200).json({ success: true, data: null });
+      return;
     }
 
     res.status(200).json({ success: true, data: studentVerifications });

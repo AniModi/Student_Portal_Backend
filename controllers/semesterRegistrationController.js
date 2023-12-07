@@ -47,6 +47,7 @@ async function getRegistrationDetails(req, res) {
     });
     if (!studentDocument) {
       res.status(200).json({ success: true, data: null });
+      return;
     }
     res.status(200).json({ success: true, data: studentDocument });
   } catch (err) {
@@ -94,6 +95,7 @@ async function isVerified(req, res) {
         });
         if (!verify) {
         res.status(200).json({ success: true, data: null });
+        return;
         }
         res.status(200).json({ success: true, data: verify });
     } catch (err) {
